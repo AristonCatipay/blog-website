@@ -5,7 +5,5 @@ const postSchema = new mongoose.Schema({
   description: { type: String, required: true },
 });
 
-const db = mongoose.connection.useDb("blog_db");
-const Post = db.model("Post", postSchema);
-
+const Post = mongoose.model("Post", postSchema);
 module.exports = Post;

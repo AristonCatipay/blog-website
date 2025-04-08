@@ -8,13 +8,20 @@ const app = express();
 // Middleware
 app.use(express.json());
 
+// Load models
+require("./src/models/user");
+require("./src/models/post");
+
 // Routes
 app.use("/api/posts", require("./src/routes/post"));
+app.use("/api/users", require("./src/routes/user"));
 
 // Connect to the MongoDB Cluster
 async function startServer() {
   try {
-    await mongoose.connect(process.env.MONGODB_URI);
+    await mongoose.connect(process.env.MONGODB_URI, {
+      dbName: "blog_db",
+    });
     console.info("Connected to the MongoDB Atlas.");
 
     app.listen(process.env.PORT, () => {
