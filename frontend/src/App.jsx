@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import Posts from "./pages/Posts";
 import CreatePost from "./pages/CreatePost";
 import NotFound from "./pages/NotFound";
+import PostDetails from "./pages/PostDetails";
 
 import Container from "react-bootstrap/Container";
 
@@ -23,6 +24,10 @@ function App() {
             <Route
               path="/posts/create"
               element={<CreatePost></CreatePost>}
+            ></Route>
+            <Route
+              path="/posts/:id"
+              element={<PostDetails></PostDetails>}
             ></Route>
             <Route path="/register" element={<Register></Register>}></Route>
             <Route path="/login" element={<Login></Login>}></Route>

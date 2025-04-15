@@ -8,6 +8,16 @@ const app = express();
 // Middleware
 app.use(express.json());
 
+// CORS
+const corsOptions = {
+  origin: ["http://localhost:5173"],
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  exposedHeaders: ["Content-Type"],
+  credentials: true,
+};
+app.use(cors(corsOptions));
+
 // Load models
 require("./src/models/user");
 require("./src/models/post");
