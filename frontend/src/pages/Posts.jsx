@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import Spinner from "react-bootstrap/Spinner";
 import Button from "react-bootstrap/Button";
@@ -65,7 +65,9 @@ export default function Posts() {
           <Card.Body>
             <Card.Title>{post.title}</Card.Title>
             <Card.Text>{post.description}</Card.Text>
-            <Button variant="primary">View Post Details</Button>
+            <Button variant="primary" as={Link} to={`/posts/${post._id}`}>
+              View Post Details
+            </Button>
           </Card.Body>
         </Card>
       ))}
