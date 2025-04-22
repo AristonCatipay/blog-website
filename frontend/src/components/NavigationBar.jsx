@@ -33,6 +33,9 @@ export default function NavigationBar() {
                 <Nav.Link as={Link} to="/posts/create">
                   Create Post
                 </Nav.Link>
+                <Nav.Link as={Link} to="/posts/user/me">
+                  My Posts
+                </Nav.Link>
                 <Button variant="success" onClick={handleLogout}>
                   Logout
                 </Button>

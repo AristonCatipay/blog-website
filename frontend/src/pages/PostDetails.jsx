@@ -117,6 +117,89 @@ export default function PostDetails() {
     }
   }, [post, currentUser]);
 
+  const handleUpdate = async () => {
+    try {
+      const storedToken = localStorage.getItem("jwtToken");
+      if (!storedToken) {
+        navigate("/login");
+        return;
+      }
+
+      if (!isTokenValid(storedToken)) {
+        localStorage.removeItem("jwtToken");
+        navigate("/login");
+        return;
+      }
+
+      const updatedPost = {
+        title: title !== "" ? title : post.title,
+        description: description !== "" ? description : post.description,
+      };
+
+      const response = await fetch(`http://localhost:3000/api/posts/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${storedToken}`,
+        },
+        body: JSON.stringify(updatedPost),
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        handleShowAlert(data.error || "Failed to update post.", "danger");
+        return;
+      }
+
+      const data = await response.json();
+      handleShowAlert(`${data.message}. Redirecting...`);
+      setTimeout(() => {
+        navigate("/posts");
+      }, 3000);
+    } catch (error) {
+      console.error("Failed to update post:", error.message);
+      handleShowAlert("Failed to update post.", "danger");
+    }
+  };
+
+  const handleDelete = async () => {
+    try {
+      const storedToken = localStorage.getItem("jwtToken");
+      if (!storedToken) {
+        navigate("/login");
+        return;
+      }
+
+      if (!isTokenValid(storedToken)) {
+        localStorage.removeItem("jwtToken");
+        navigate("/loin");
+        return;
+      }
+
+      const response = await fetch(`http://localhost:3000/api/posts/${id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${storedToken}`,
+        },
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        handleShowAlert(data.error || "Failed to delete post.", "danger");
+        return;
+      }
+
+      const data = await response.json();
+      handleShowAlert(`${data.message}. Redirecting ...`);
+      setTimeout(() => {
+        navigate("/posts");
+      }, 3000);
+    } catch (error) {
+      console.error("Failed to delete the post.", error.message);
+      handleShowAlert("Failed to delete the post.", "danger");
+    }
+  };
+
   if (isLoading || !post) {
     return <Spinner animation="border" variant="primary" />;
   }
@@ -153,10 +236,10 @@ export default function PostDetails() {
               />
             </Form.Group>
 
-            <Button className="mx-2" variant="warning">
+            <Button className="mx-2" variant="warning" onClick={handleUpdate}>
               Update
             </Button>
-            <Button className="mx-2" variant="danger">
+            <Button className="mx-2" variant="danger" onClick={handleDelete}>
               Delete
             </Button>
           </Form>
