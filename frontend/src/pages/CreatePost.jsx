@@ -50,14 +50,17 @@ export default function CreatePost() {
         return;
       }
 
-      const response = await fetch("http://localhost:3000/api/posts", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ title, description }),
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_APP_BASE_URL}/api/posts`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ title, description }),
+        }
+      );
 
       if (!response.ok) {
         const data = await response.json();

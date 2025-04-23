@@ -29,11 +29,14 @@ export default function Posts() {
           return;
         }
 
-        const response = await fetch("http://localhost:3000/api/posts", {
-          headers: {
-            Authorization: `Bearer ${storedToken}`,
-          },
-        });
+        const response = await fetch(
+          `${import.meta.env.VITE_APP_BASE_URL}/api/posts`,
+          {
+            headers: {
+              Authorization: `Bearer ${storedToken}`,
+            },
+          }
+        );
 
         if (!response.ok) {
           const data = await response.json();

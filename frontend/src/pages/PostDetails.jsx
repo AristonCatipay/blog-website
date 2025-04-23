@@ -45,11 +45,14 @@ export default function PostDetails() {
           return;
         }
 
-        const response = await fetch("http://localhost:3000/api/users/me", {
-          headers: {
-            Authorization: `Bearer ${storedToken}`,
-          },
-        });
+        const response = await fetch(
+          `${import.meta.env.VITE_APP_BASE_URL}/api/users/me`,
+          {
+            headers: {
+              Authorization: `Bearer ${storedToken}`,
+            },
+          }
+        );
 
         if (!response.ok) {
           const data = await response.json();
@@ -87,11 +90,14 @@ export default function PostDetails() {
           return;
         }
 
-        const response = await fetch(`http://localhost:3000/api/posts/${id}`, {
-          headers: {
-            Authorization: `Bearer ${storedToken}`,
-          },
-        });
+        const response = await fetch(
+          `${import.meta.env.VITE_APP_BASE_URL}/api/posts/${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${storedToken}`,
+            },
+          }
+        );
 
         if (!response.ok) {
           const data = response.json();
@@ -136,14 +142,17 @@ export default function PostDetails() {
         description: description !== "" ? description : post.description,
       };
 
-      const response = await fetch(`http://localhost:3000/api/posts/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${storedToken}`,
-        },
-        body: JSON.stringify(updatedPost),
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_APP_BASE_URL}/api/posts/${id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${storedToken}`,
+          },
+          body: JSON.stringify(updatedPost),
+        }
+      );
 
       if (!response.ok) {
         const data = await response.json();
@@ -176,12 +185,15 @@ export default function PostDetails() {
         return;
       }
 
-      const response = await fetch(`http://localhost:3000/api/posts/${id}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${storedToken}`,
-        },
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_APP_BASE_URL}/api/posts/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${storedToken}`,
+          },
+        }
+      );
 
       if (!response.ok) {
         const data = await response.json();

@@ -30,7 +30,7 @@ export default function MyPosts() {
         }
 
         const response = await fetch(
-          "http://localhost:3000/api/posts/user/me",
+          `${import.meta.env.VITE_APP_BASE_URL}/api/posts/user/me`,
           {
             headers: {
               Authorization: `Bearer ${storedToken}`,
