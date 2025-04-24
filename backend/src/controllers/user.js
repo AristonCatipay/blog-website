@@ -63,8 +63,56 @@ const getCurrentUser = async (req, res) => {
   }
 };
 
+const changePassword = async (req, res) => {
+  const { currentPassword, newPassword } = req.body;
+  const userId = req.user.userId;
+
+  try {
+    if (!currentPassword || !newPassword) {
+      return res
+        .status(400)
+        .json({ error: "Both current and new password are required" });
+    }
+
+    if (currentPassword === newPassword) {
+      return res.status(400).json({
+        error: "New password must be different from current password",
+      });
+    }
+
+    // Find user
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    // Verify current password
+    const isPasswordValid = await bcrypt.compare(
+      currentPassword,
+      user.password
+    );
+    if (!isPasswordValid) {
+      return res.status(401).json({ error: "Current password is incorrect" });
+    }
+
+    // Hash new password
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    // Update password
+    user.password = hashedPassword;
+    await user.save();
+
+    // Optionally invalidate old tokens by changing the JWT secret or tracking token versions
+
+    res.status(200).json({ message: "Password changed successfully" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 module.exports = {
   registerUser,
   loginUser,
   getCurrentUser,
+  changePassword,
 };

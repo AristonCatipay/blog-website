@@ -8,6 +8,7 @@ import CreatePost from "./pages/CreatePost";
 import NotFound from "./pages/NotFound";
 import PostDetails from "./pages/PostDetails";
 import MyPosts from "./pages/MyPosts";
+import ChangePassword from "./pages/ChangePassword";
 
 import Container from "react-bootstrap/Container";
 
@@ -31,6 +32,10 @@ function App() {
               element={<PostDetails></PostDetails>}
             ></Route>
             <Route path="/posts/user/me" element={<MyPosts></MyPosts>}></Route>
+            <Route
+              path="/change-password"
+              element={<ChangePassword></ChangePassword>}
+            ></Route>
             <Route path="/register" element={<Register></Register>}></Route>
             <Route path="/login" element={<Login></Login>}></Route>
             <Route path="*" element={<NotFound></NotFound>}></Route>

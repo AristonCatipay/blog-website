@@ -36,6 +36,9 @@ export default function NavigationBar() {
                 <Nav.Link as={Link} to="/posts/user/me">
                   My Posts
                 </Nav.Link>
+                <Nav.Link as={Link} to="/change-password">
+                  Change Password
+                </Nav.Link>
                 <Button variant="success" onClick={handleLogout}>
                   Logout
                 </Button>
